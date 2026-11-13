@@ -1,26 +1,115 @@
+/* Webpart: mirrors the Vikunja login (NoAuthWrapper.vue). */
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px 80px;
+    background: var(--wp-site-bg, #f8fafc);
+}
+
 .logo {
-    margin-top: 80px;
+    margin: 48px 0 16px;
 
     @media (max-width: $mantine-breakpoint-sm) {
-        margin-top: 30px;
+        margin-top: 24px;
     }
 }
 
-.container {
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 2px 45px 4px;
-    border-radius: 4px;
-    background: light-dark(var(--mantine-color-body), rgba(0, 0, 0, 0.1));
-    margin-top: 40px;
-    margin-bottom: 20px;
+.wordmark {
+    display: block;
+    width: 168px;
+    max-width: 100%;
+    height: auto;
+}
+
+.card {
+    width: 100%;
+    max-width: 960px;
+    min-height: 60vh;
+    display: flex;
+    background: var(--mantine-color-body);
+    border: 1px solid var(--wp-border, #e2e8f0);
+    border-radius: var(--mantine-radius-lg);
+    box-shadow: var(--mantine-shadow-md);
+    overflow: hidden;
+}
+
+.brandPanel {
+    position: relative;
+    width: 50%;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background:
+        radial-gradient(circle at 85% 15%, hsla(15, 83%, 46%, 0.35), transparent 45%),
+        radial-gradient(circle at 10% 90%, hsla(165, 50%, 35%, 0.55), transparent 50%),
+        #10312b;
+
+    /* faint grid texture */
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(hsla(0, 0%, 100%, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, hsla(0, 0%, 100%, 0.04) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+
+    > * {
+        position: relative;
+    }
 
     @media (max-width: $mantine-breakpoint-sm) {
-        margin-top: 20px;
-        margin-bottom: 20px;
+        display: none;
     }
+}
+
+.brandMark {
+    width: 64px;
+    height: 64px;
+    border-radius: 15px;
+    box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.15);
+}
+
+.brandEyebrow {
+    margin: 0 0 4px;
+    color: hsla(0, 0%, 100%, 0.7);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.brandTitle {
+    margin: 0;
+    color: #ffffff;
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.formPanel {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 8px;
+
+    @media (max-width: $mantine-breakpoint-sm) {
+        width: 100%;
+    }
+}
+
+/* Form containers now sit inside .card, so they drop their own chrome. */
+.container {
+    width: 100%;
+    margin: 0 auto;
 }
 
 .containerBox {
-    margin-top: 40px;
+    margin-top: 0;
 }
-
-

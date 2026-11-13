@@ -1,0 +1,72 @@
+/*
+ * Webpart brand layer (shared look with tasks.webpart.ro).
+ * Kept to Mantine's static class names + CSS variables so upstream CSS modules
+ * stay untouched and merges remain easy. Colour scales live in theme.ts.
+ */
+
+:root {
+  --wp-green: #10312b;
+  --wp-orange: #d63e14;
+  --wp-site-bg: #f8fafc; /* slate-50 */
+  --wp-surface: #ffffff;
+  --wp-border: #e2e8f0; /* slate-200 */
+  --wp-rail: #0f172a; /* slate-900, Vikunja icon rail */
+}
+
+[data-mantine-color-scheme="dark"] {
+  --wp-site-bg: #0b1120;
+  --wp-surface: #0f172a;
+  --wp-border: #1e293b;
+  --wp-rail: #020617;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* App shell: slate-50 chrome with hairline slate-200 dividers, white content. */
+body .mantine-AppShell-header {
+  background-color: var(--wp-surface);
+  border-bottom: 1px solid var(--wp-border);
+}
+
+body .mantine-AppShell-navbar,
+body .mantine-AppShell-aside {
+  background-color: var(--wp-site-bg);
+}
+
+body .mantine-AppShell-navbar {
+  border-right: 1px solid var(--wp-border);
+}
+
+body .mantine-AppShell-aside {
+  border-left: 1px solid var(--wp-border);
+}
+
+/* Cards / papers: white with 1px slate-200 borders. */
+[data-mantine-color-scheme="light"] .mantine-Paper-root,
+[data-mantine-color-scheme="light"] .mantine-Card-root {
+  --paper-border-color: var(--wp-border);
+}
+
+/* a11y-overrides.css bumps default input borders to gray.6, which on the slate
+ * scale is near-black. slate-500 still clears WCAG 1.4.11 (4.76:1 on white). */
+[data-mantine-color-scheme="light"]
+  .mantine-Input-input[data-variant="default"] {
+  border-color: var(--mantine-color-gray-5);
+}
+
+/* Header brand: Webpart mark like the top of the Vikunja icon rail. */
+.wp-brand-mark {
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  box-shadow: 0 0 0 1px rgb(15 23 42 / 0.08);
+  flex-shrink: 0;
+}
+
+[data-mantine-color-scheme="dark"] .wp-brand-mark {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12);
+}

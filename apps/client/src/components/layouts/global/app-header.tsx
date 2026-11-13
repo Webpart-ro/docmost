@@ -23,7 +23,8 @@ import { useToggleSidebar } from "@/components/layouts/global/hooks/hooks/use-to
 import SidebarToggle from "@/components/ui/sidebar-toggle-button.tsx";
 import { useTranslation } from "react-i18next";
 import useTrial from "@/ee/hooks/use-trial.tsx";
-import { isCloud } from "@/lib/config.ts";
+import { getAppName, getWebpartTasksUrl, isCloud } from "@/lib/config.ts";
+import { WebpartMark } from "@/components/ui/webpart-mark.tsx";
 import {
   SearchControl,
   SearchMobileControl,
@@ -59,6 +60,14 @@ export function AppHeader() {
       {t(link.label)}
     </Link>
   ));
+  const tasksUrl = getWebpartTasksUrl();
+  if (tasksUrl) {
+    items.push(
+      <a key="webpart-tasks" href={tasksUrl} className={classes.link}>
+        {t("Tasks")}
+      </a>,
+    );
+  }
 
   return (
     <>
@@ -84,22 +93,18 @@ export function AppHeader() {
             />
           </Tooltip>
 
-          <Link to="/home" className={classes.brand} aria-label="Docmost">
-            <Box hiddenFrom="sm" className={classes.brandIcon}>
-              <img
-                src="/icons/favicon-32x32.png"
-                alt="Docmost"
-                width={22}
-                height={22}
-              />
+          <Link to="/home" className={classes.brand} aria-label={getAppName()}>
+            <Box className={classes.brandIcon}>
+              <WebpartMark className="wp-brand-mark" />
             </Box>
             <Text
-              size="lg"
-              fw={600}
-              style={{ userSelect: "none" }}
+              size="md"
+              fw={700}
+              ml={8}
+              style={{ userSelect: "none", letterSpacing: "-0.01em" }}
               visibleFrom="sm"
             >
-              Docmost
+              {getAppName()}
             </Text>
           </Link>
 

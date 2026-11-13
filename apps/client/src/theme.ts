@@ -1,6 +1,10 @@
 import {
   Badge,
+  Card,
   createTheme,
+  Menu,
+  Modal,
+  Popover,
   CSSVariablesResolver,
   MantineColorsTuple,
   Tabs,
@@ -8,17 +12,47 @@ import {
   v8CssVariablesResolver,
 } from "@mantine/core";
 
+// Webpart brand (shared with tasks.webpart.ro): Tailwind blue/slate scales.
+// blue.6 = #2563eb (hsl 221.2 83.2% 53.3%), blue.5 = #3b82f6 (dark-mode primary).
 const blue: MantineColorsTuple = [
-  "#e7f3ff",
-  "#d0e4ff",
-  "#a1c6fa",
-  "#6ea6f6",
-  "#458bf2",
-  "#2b7af1",
-  "#0b60d8",
-  "#1b72f2",
-  "#0056c1",
-  "#004aac",
+  "#eff6ff",
+  "#dbeafe",
+  "#bfdbfe",
+  "#93c5fd",
+  "#60a5fa",
+  "#3b82f6",
+  "#2563eb",
+  "#1d4ed8",
+  "#1e40af",
+  "#1e3a8a",
+];
+
+// Tailwind slate 50-900 replaces Mantine's neutral gray everywhere it is used.
+const gray: MantineColorsTuple = [
+  "#f8fafc",
+  "#f1f5f9",
+  "#e2e8f0",
+  "#cbd5e1",
+  "#94a3b8",
+  "#64748b",
+  "#475569",
+  "#334155",
+  "#1e293b",
+  "#0f172a",
+];
+
+// Dark scheme surfaces in slate (body = dark.7 = slate-900, like the Vikunja rail).
+const dark: MantineColorsTuple = [
+  "#e2e8f0",
+  "#cbd5e1",
+  "#94a3b8",
+  "#64748b",
+  "#334155",
+  "#273449",
+  "#1e293b",
+  "#0f172a",
+  "#0b1120",
+  "#020617",
 ];
 
 const red: MantineColorsTuple = [
@@ -37,10 +71,48 @@ const red: MantineColorsTuple = [
 export const theme = createTheme({
   colors: {
     blue,
+    gray,
+    dark,
     red,
   },
-  defaultRadius: 'sm',
+  primaryColor: "blue",
+  primaryShade: { light: 6, dark: 5 },
+  black: "#0f172a",
+  white: "#ffffff",
+  fontFamily:
+    "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+  headings: {
+    fontFamily:
+      "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+  },
+  radius: {
+    xs: "4px",
+    sm: "6px",
+    md: "8px",
+    lg: "12px",
+    xl: "16px",
+  },
+  defaultRadius: "sm",
+  shadows: {
+    xs: "0 1px 2px 0 rgb(15 23 42 / 0.05)",
+    sm: "0 1px 3px 0 rgb(15 23 42 / 0.08), 0 1px 2px -1px rgb(15 23 42 / 0.06)",
+    md: "0 4px 6px -1px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.06)",
+    lg: "0 10px 15px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.05)",
+    xl: "0 20px 25px -5px rgb(15 23 42 / 0.08), 0 8px 10px -6px rgb(15 23 42 / 0.05)",
+  },
   components: {
+    Card: Card.extend({
+      defaultProps: { withBorder: true, radius: "md", shadow: "xs" },
+    }),
+    Modal: Modal.extend({
+      defaultProps: { radius: "md" },
+    }),
+    Menu: Menu.extend({
+      defaultProps: { radius: "md", shadow: "md" },
+    }),
+    Popover: Popover.extend({
+      defaultProps: { radius: "md", shadow: "md" },
+    }),
     Tooltip: Tooltip.extend({
       defaultProps: {
         events: { hover: true, focus: true, touch: false },
@@ -91,7 +163,8 @@ export const mantineCssResolver: CSSVariablesResolver = (theme) => ({
   },
   light: {
     ...v8CssVariablesResolver(theme).light,
-    "--mantine-color-dimmed": "#4b5563",
+    // slate-600: same role as upstream's #4b5563, 7.6:1 on white
+    "--mantine-color-dimmed": "#475569",
     "--mantine-color-dark-light-color": "#4e5359",
     "--mantine-color-dark-light-hover": "var(--mantine-color-gray-light-hover)",
     // Override the semantic error color so input error text / borders /
