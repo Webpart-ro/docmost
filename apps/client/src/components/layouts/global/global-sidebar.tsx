@@ -8,6 +8,7 @@ import {
   IconSettings,
   IconUserPlus,
   IconTemplate,
+  IconChecklist,
 } from "@tabler/icons-react";
 import { Link, useLocation } from "react-router-dom";
 import classes from "./global-sidebar.module.css";
@@ -16,7 +17,7 @@ import { useAtom } from "jotai";
 import { mobileSidebarAtom } from "@/components/layouts/global/hooks/atoms/sidebar-atom";
 import { useToggleSidebar } from "@/components/layouts/global/hooks/hooks/use-toggle-sidebar";
 import { useFavoritesQuery } from "@/features/favorite/queries/favorite-query";
-import { getSpaceUrl } from "@/lib/config";
+import { getSpaceUrl, getWebpartTasksUrl } from "@/lib/config";
 import { useDisclosure } from "@mantine/hooks";
 import { WorkspaceInviteForm } from "@/features/workspace/components/members/components/workspace-invite-form";
 import { CustomAvatar } from "@/components/ui/custom-avatar";
@@ -44,6 +45,7 @@ export default function GlobalSidebar() {
       disabled: !hasTemplates,
     },
   ];
+  const tasksUrl = getWebpartTasksUrl();
   const { data: favoriteSpacesData, isPending: isFavoritesPending } = useFavoritesQuery("space");
   const favoriteSpaces = favoriteSpacesData?.pages.flatMap((p) => p.items) ?? [];
   const sortedFavoriteSpaces = [...favoriteSpaces]
@@ -100,6 +102,12 @@ export default function GlobalSidebar() {
                 <span>{t(item.label)}</span>
               </Link>
             ),
+          )}
+          {tasksUrl && (
+            <a className={classes.link} href={tasksUrl}>
+              <IconChecklist className={classes.linkIcon} stroke={2} />
+              <span>{t("Tasks")}</span>
+            </a>
           )}
         </div>
 

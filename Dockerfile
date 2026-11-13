@@ -1,5 +1,5 @@
 FROM node:26-slim AS base
-LABEL org.opencontainers.image.source="https://github.com/docmost/docmost"
+LABEL org.opencontainers.image.source="https://github.com/Webpart-ro/docmost"
 
 RUN npm install -g pnpm@11.28.2
 

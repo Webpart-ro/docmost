@@ -10,7 +10,8 @@ declare global {
 }
 
 export function getAppName(): string {
-  return "Docmost";
+  // Webpart branding
+  return "Webpart Docs";
 }
 
 export function getAppUrl(): string {
@@ -45,6 +46,25 @@ export function isCloud(): boolean {
 
 export function isBetaPublicSpaces(): boolean {
   return castToBoolean(getConfigValue("BETA_PUBLIC_SPACES"));
+}
+
+// Webpart: "Sign in with Vikunja" login (server-side OAuth2 + PKCE).
+export function isVikunjaAuthEnabled(): boolean {
+  return castToBoolean(getConfigValue("VIKUNJA_AUTH_ENABLED"));
+}
+
+export function getVikunjaAuthName(): string {
+  return getConfigValue("VIKUNJA_AUTH_NAME") || "Webpart Tasks";
+}
+
+// Webpart: cross-link to the task manager; hidden when unset.
+export function getWebpartTasksUrl(): string | undefined {
+  const url = getConfigValue("WEBPART_TASKS_URL");
+  return url && /^https?:\/\//i.test(url) ? url : undefined;
+}
+
+export function isPasswordLoginDisabled(): boolean {
+  return castToBoolean(getConfigValue("DISABLE_PASSWORD_LOGIN"));
 }
 
 export function getAiVectorDriver(): string {

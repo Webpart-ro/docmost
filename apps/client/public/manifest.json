@@ -1,10 +1,10 @@
 {
-  "name": "Docmost",
-  "short_name": "Docmost",
+  "name": "Webpart Docs",
+  "short_name": "Docs",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#222",
-  "theme_color": "#222",
+  "background_color": "#f8fafc",
+  "theme_color": "#10312b",
   "icons": [
     {
       "src": "icons/favicon-16x16.png",

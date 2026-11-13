@@ -39,6 +39,17 @@ export function validateSsoEnforcement(workspace: Workspace) {
   }
 }
 
+// Webpart: DISABLE_PASSWORD_LOGIN=true (only effective while Vikunja login is configured).
+export function validatePasswordLoginEnabled(env: {
+  isPasswordLoginDisabled(): boolean;
+}) {
+  if (env.isPasswordLoginDisabled()) {
+    throw new BadRequestException(
+      'Password login is disabled. Use single sign-on instead.',
+    );
+  }
+}
+
 export function validateAllowedEmail(userEmail: string, workspace: Workspace) {
   const emailParts = userEmail.split('@');
   const emailDomain = emailParts[1].toLowerCase();

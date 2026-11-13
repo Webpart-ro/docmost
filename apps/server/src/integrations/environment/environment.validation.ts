@@ -192,6 +192,29 @@ export class EnvironmentVariables {
   OLLAMA_API_URL: string;
 
   @IsOptional()
+  @ValidateIf(
+    (obj) => obj.VIKUNJA_AUTH_URL != '' && obj.VIKUNJA_AUTH_URL != null,
+  )
+  @IsUrl({ protocols: ['http', 'https'], require_tld: false })
+  VIKUNJA_AUTH_URL: string;
+
+  @IsOptional()
+  @ValidateIf(
+    (obj) =>
+      obj.VIKUNJA_AUTH_INTERNAL_URL != '' &&
+      obj.VIKUNJA_AUTH_INTERNAL_URL != null,
+  )
+  @IsUrl({ protocols: ['http', 'https'], require_tld: false })
+  VIKUNJA_AUTH_INTERNAL_URL: string;
+
+  @IsOptional()
+  @ValidateIf(
+    (obj) => obj.WEBPART_TASKS_URL != '' && obj.WEBPART_TASKS_URL != null,
+  )
+  @IsUrl({ protocols: ['http', 'https'], require_tld: false })
+  WEBPART_TASKS_URL: string;
+
+  @IsOptional()
   @IsIn(['postgres', 'clickhouse'])
   @IsString()
   EVENT_STORE_DRIVER: string;

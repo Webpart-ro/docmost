@@ -400,4 +400,53 @@ export class EnvironmentService {
   getAllowedPrivateNetworks(): string {
     return this.configService.get<string>('ALLOWED_PRIVATE_NETWORKS', 'none');
   }
+
+  // Webpart: link to the task manager in the nav (hidden when unset).
+  getWebpartTasksUrl(): string | undefined {
+    return this.configService.get<string>('WEBPART_TASKS_URL') || undefined;
+  }
+
+  // Webpart: "Sign in with Vikunja" (OAuth2 authorization code + PKCE).
+  getVikunjaAuthUrl(): string | undefined {
+    const url = this.configService.get<string>('VIKUNJA_AUTH_URL');
+    return url ? url.replace(/\/+$/, '') : undefined;
+  }
+
+  // Optional server-to-server base URL (e.g. the container on a docker network);
+  // the browser is always sent to VIKUNJA_AUTH_URL.
+  getVikunjaAuthInternalUrl(): string | undefined {
+    const url =
+      this.configService.get<string>('VIKUNJA_AUTH_INTERNAL_URL') ||
+      this.getVikunjaAuthUrl();
+    return url ? url.replace(/\/+$/, '') : undefined;
+  }
+
+  getVikunjaAuthClientId(): string {
+    return this.configService.get<string>('VIKUNJA_AUTH_CLIENT_ID', 'docmost');
+  }
+
+  getVikunjaAuthName(): string {
+    return this.configService.get<string>('VIKUNJA_AUTH_NAME', 'Webpart Tasks');
+  }
+
+  isVikunjaAuthEnabled(): boolean {
+    return !!this.getVikunjaAuthUrl() && !!this.getVikunjaAuthClientId();
+  }
+
+  isVikunjaAuthSignupAllowed(): boolean {
+    return (
+      this.configService
+        .get<string>('VIKUNJA_AUTH_ALLOW_SIGNUP', 'true')
+        .toLowerCase() === 'true'
+    );
+  }
+
+  // Only honoured while Vikunja login is configured, so a bad env can't lock everyone out.
+  isPasswordLoginDisabled(): boolean {
+    const disabled =
+      this.configService
+        .get<string>('DISABLE_PASSWORD_LOGIN', 'false')
+        .toLowerCase() === 'true';
+    return disabled && this.isVikunjaAuthEnabled();
+  }
 }
