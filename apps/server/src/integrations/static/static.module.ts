@@ -54,6 +54,13 @@ export class StaticModule implements OnModuleInit {
           this.environmentService.getAiVectorDriver() === 'turbopuffer'
             ? 'turbopuffer'
             : undefined,
+        VIKUNJA_AUTH_ENABLED: this.environmentService.isVikunjaAuthEnabled(),
+        VIKUNJA_AUTH_NAME: this.environmentService.isVikunjaAuthEnabled()
+          ? this.environmentService.getVikunjaAuthName()
+          : undefined,
+        WEBPART_TASKS_URL: this.environmentService.getWebpartTasksUrl(),
+        DISABLE_PASSWORD_LOGIN:
+          this.environmentService.isPasswordLoginDisabled(),
       };
 
       const windowScriptContent = `<script>window.CONFIG=${JSON.stringify(configString)};</script>`;

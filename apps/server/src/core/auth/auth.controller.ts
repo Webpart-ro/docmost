@@ -30,7 +30,10 @@ import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { PasswordResetDto } from './dto/password-reset.dto';
 import { VerifyUserTokenDto } from './dto/verify-user-token.dto';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { validateSsoEnforcement } from './auth.util';
+import {
+  validatePasswordLoginEnabled,
+  validateSsoEnforcement,
+} from './auth.util';
 import { ModuleRef } from '@nestjs/core';
 import { AuditEvent, AuditResource } from '../../common/events/audit-events';
 import {
@@ -60,6 +63,7 @@ export class AuthController {
     @Body() loginInput: LoginDto,
   ) {
     validateSsoEnforcement(workspace);
+    validatePasswordLoginEnabled(this.environmentService);
 
     let MfaModule: any;
     let isMfaModuleReady = false;
@@ -144,6 +148,7 @@ export class AuthController {
     @AuthWorkspace() workspace: Workspace,
   ) {
     validateSsoEnforcement(workspace);
+    validatePasswordLoginEnabled(this.environmentService);
     return this.authService.forgotPassword(forgotPasswordDto, workspace);
   }
 

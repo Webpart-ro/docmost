@@ -19,6 +19,7 @@ export enum EncryptionPurpose {
   SIEM_CREDENTIALS = 'siem-credentials',
   INTEGRATION_TOKENS = 'integration-tokens',
   OAUTH_COMPLETION = 'oauth-completion',
+  VIKUNJA_LOGIN = 'vikunja-login',
 }
 
 const KEY_ID = 'app-secret';

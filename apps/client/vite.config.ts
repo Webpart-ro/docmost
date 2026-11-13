@@ -18,7 +18,12 @@ export default defineConfig(({ mode }) => {
     POSTHOG_KEY,
     AI_VECTOR_DRIVER,
     BETA_PUBLIC_SPACES,
+    VIKUNJA_AUTH_URL,
+    VIKUNJA_AUTH_NAME,
+    DISABLE_PASSWORD_LOGIN,
+    WEBPART_TASKS_URL,
   } = loadEnv(mode, envPath, "");
+  const VIKUNJA_AUTH_ENABLED = VIKUNJA_AUTH_URL ? "true" : "false";
 
   return {
     define: {
@@ -35,6 +40,13 @@ export default defineConfig(({ mode }) => {
         POSTHOG_KEY,
         AI_VECTOR_DRIVER,
         BETA_PUBLIC_SPACES,
+        VIKUNJA_AUTH_ENABLED,
+        VIKUNJA_AUTH_NAME,
+        WEBPART_TASKS_URL,
+        DISABLE_PASSWORD_LOGIN:
+          VIKUNJA_AUTH_URL && DISABLE_PASSWORD_LOGIN === "true"
+            ? "true"
+            : "false",
       },
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
     },

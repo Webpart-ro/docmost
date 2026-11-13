@@ -22,6 +22,11 @@ import { useWorkspacePublicDataQuery } from "@/features/workspace/queries/worksp
 import { Error404 } from "@/components/ui/error-404.tsx";
 import React from "react";
 import { AuthLayout } from "./auth-layout.tsx";
+import { VikunjaLogin } from "./vikunja-login.tsx";
+import {
+  isPasswordLoginDisabled,
+  isVikunjaAuthEnabled,
+} from "@/lib/config.ts";
 
 const formSchema = z.object({
   email: z
@@ -61,6 +66,8 @@ export function LoginForm() {
     }
   }
 
+  const showPasswordForm = !data?.enforceSso && !isPasswordLoginDisabled();
+
   if (isDataLoading) {
    return null;
   }
@@ -79,7 +86,9 @@ export function LoginForm() {
 
           <SsoLogin />
 
-          {!data?.enforceSso && (
+          <VikunjaLogin showDivider={showPasswordForm} />
+
+          {showPasswordForm && (
             <>
               <form onSubmit={form.onSubmit(onSubmit, handleValidationFailure)}>
                 <TextInput
@@ -120,7 +129,13 @@ export function LoginForm() {
                   </Anchor>
                 </Group>
 
-                <Button type="submit" fullWidth mt="md" loading={isLoading}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  mt="md"
+                  loading={isLoading}
+                  variant={isVikunjaAuthEnabled() ? "default" : "filled"}
+                >
                   {t("Sign In")}
                 </Button>
               </form>
