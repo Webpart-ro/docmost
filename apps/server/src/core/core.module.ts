@@ -29,6 +29,7 @@ import { LinearModule } from './integration/providers/linear/linear.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { SessionModule } from './session/session.module';
 import { ApiTokenModule } from './api-token/api-token.module';
+import { McpModule } from './mcp/mcp.module';
 import { ClsMiddleware } from 'nestjs-cls';
 
 @Module({
@@ -56,6 +57,7 @@ import { ClsMiddleware } from 'nestjs-cls';
     LinearModule,
     SessionModule,
     ApiTokenModule,
+    McpModule,
   ],
 })
 export class CoreModule implements NestModule {
