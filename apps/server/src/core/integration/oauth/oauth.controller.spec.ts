@@ -24,6 +24,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { JwtStrategy } from '../../auth/strategies/jwt.strategy';
+import { ApiTokenService } from '../../api-token/api-token.service';
 import { OAuthService } from './oauth.service';
 import { IntegrationConnectionService } from '../integration-connection.service';
 import { IntegrationRegistry } from '../registry/integration-registry';
@@ -526,6 +527,7 @@ describe('OAuthController complete without a session', () => {
           WorkspaceRepo,
           UserSessionRepo,
           SessionActivityService,
+          ApiTokenService,
         ].map((provide) => ({ provide, useValue: {} })),
       ],
     }).compile();

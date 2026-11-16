@@ -69,6 +69,7 @@ const MfaSetupRequiredPage = lazyWithPrefetch(() =>
 );
 const SpaceTrash = lazyWithPrefetch(() => import("@/pages/space/space-trash.tsx"));
 const UserApiKeys = lazyWithPrefetch(() => import("@/ee/api-key/pages/user-api-keys"));
+const ApiTokens = lazyWithPrefetch(() => import("@/features/api-token/pages/api-tokens"));
 const WorkspaceApiKeys = lazyWithPrefetch(
   () => import("@/ee/api-key/pages/workspace-api-keys"),
 );
@@ -187,6 +188,7 @@ export default function App() {
               element={<AccountPreferences />}
             />
             <Route path={"account/api-keys"} element={<UserApiKeys />} />
+            <Route path={"account/api-tokens"} element={<ApiTokens />} />
             <Route
               path={"account/api-keys/authorized-apps"}
               element={<UserApiKeys />}

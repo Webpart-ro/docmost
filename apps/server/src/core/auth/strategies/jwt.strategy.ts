@@ -15,6 +15,7 @@ import { SessionActivityService } from '../../session/session-activity.service';
 import { FastifyRequest } from 'fastify';
 import { extractBearerTokenFromHeader, isUserDisabled } from '../../../common/helpers';
 import { ModuleRef } from '@nestjs/core';
+import { ApiTokenService } from '../../api-token/api-token.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -27,6 +28,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     private sessionActivityService: SessionActivityService,
     private readonly environmentService: EnvironmentService,
     private moduleRef: ModuleRef,
+    private readonly apiTokenService: ApiTokenService,
   ) {
     super({
       jwtFromRequest: (req: FastifyRequest) => {
@@ -96,29 +98,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   private async validateApiKey(req: any, payload: JwtApiKeyPayload) {
-    let ApiKeyModule: any;
-    let isApiKeyModuleReady = false;
-
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      ApiKeyModule = require('./../../../ee/api-key/api-key.service');
-      isApiKeyModuleReady = true;
-    } catch (err) {
-      this.logger.debug(
-        'API Key module requested but enterprise module not bundled in this build',
-      );
-      isApiKeyModuleReady = false;
-    }
-
-    if (isApiKeyModuleReady) {
-      const ApiKeyService = this.moduleRef.get(ApiKeyModule.ApiKeyService, {
-        strict: false,
-      });
-
-      return ApiKeyService.validateApiKey(payload);
-    }
-
-    throw new UnauthorizedException('Enterprise API Key module missing');
+    // Webpart fork: API tokens are served by the core ApiTokenModule
+    // instead of the enterprise ee/api-key module.
+    return this.apiTokenService.validateApiKey(payload);
   }
 
   private async validateOAuthToken(req: any, payload: JwtOAuthPayload) {
