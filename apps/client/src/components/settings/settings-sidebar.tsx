@@ -72,10 +72,9 @@ const groupedData: DataGroup[] = [
         path: "/settings/account/preferences",
       },
       {
-        label: "API keys",
+        label: "API tokens",
         icon: IconKey,
-        path: "/settings/account/api-keys",
-        feature: Feature.API_KEYS,
+        path: "/settings/account/api-tokens",
       },
       {
         label: "Connections",
