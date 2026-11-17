@@ -1,0 +1,9 @@
+[Unit]
+Description=Deploy the latest merged Docmost image (n.webpart.ro)
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/docmost-autodeploy.sh
+TimeoutStartSec=600
